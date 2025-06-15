@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+
+# Gradle
+.gradle
+build/
+!build/libs/*.jar
+
+# IDE
+.idea
+*.iml
+.vscode
+.project
+.classpath
+.settings
+
+# Logs
+*.log
+logs/
+
+# Test files
+src/test/
+
+# Documentation
+README.md
+docs/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Misc
+*.md
+*.txt
+*.properties
+!src/main/resources/application.properties
+!src/main/resources/application-*.properties 
