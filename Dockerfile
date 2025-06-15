@@ -1,4 +1,16 @@
-# Use a specific version of the JDK for better reproducibility
+# Build stage
+FROM eclipse-temurin:17-jdk-jammy as builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy the source code
+COPY . .
+
+# Build the application
+RUN ./gradlew build -x test
+
+# Run stage
 FROM eclipse-temurin:17-jre-jammy
 
 # Create a non-root user to run the application
@@ -7,8 +19,8 @@ RUN groupadd -r spring && useradd -r -g spring spring
 # Set the working directory
 WORKDIR /app
 
-# Copy the JAR file
-COPY build/libs/*.jar app.jar
+# Copy the JAR file from builder stage
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Set ownership of the JAR file
 RUN chown spring:spring app.jar
