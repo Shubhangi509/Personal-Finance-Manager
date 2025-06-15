@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy the source code
 COPY . .
 
-# Build the application
-RUN ./gradlew build -x test
+# Make gradlew executable and build the application
+RUN chmod +x ./gradlew && ./gradlew build -x test
 
 # Run stage
 FROM eclipse-temurin:17-jre-jammy
