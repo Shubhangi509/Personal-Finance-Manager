@@ -14,7 +14,7 @@ public interface TransactionService {
     List<TransactionResponse> getAllSortedByDate();
     List<TransactionResponse> getByDateRange(LocalDate start, LocalDate end);
     List<TransactionResponse> getByType(TransactionType type);
-    List<TransactionResponse> getByCategory(Long categoryId);
+    List<TransactionResponse> getByCategory(String category);
     List<TransactionResponse> getByDateRangeAndType(LocalDate start, LocalDate end, TransactionType type);
     TransactionResponse update(Long id, TransactionUpdateRequest request);
     void delete(Long id);

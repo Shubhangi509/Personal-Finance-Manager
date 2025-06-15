@@ -118,13 +118,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionResponse> getByCategory(Long categoryId) {
+    public List<TransactionResponse> getByCategory(String categoryName) {
         User user = sessionUtil.getSessionUser();
-        log.info("Fetching transactions for category ID {} and user ID {}", categoryId, user.getId());
+        log.info("Fetching transactions for category {} and user ID {}", categoryName, user.getId());
 
-        Category category = categoryRepo.findById(categoryId)
+        Category category = categoryRepo.findByNameAndUser(categoryName, user)
                 .orElseThrow(() -> {
-                    log.warn("Category ID {} not found", categoryId);
+                    log.warn("Category {} not found", categoryName);
                     return new RuntimeException("Category not found");
                 });
 
@@ -135,7 +135,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         List<Transaction> transactions = transactionRepo.findByUserAndCategory(user, category);
-        log.info("Found {} transactions for category ID {} and user ID {}", transactions.size(), categoryId, user.getId());
+        log.info("Found {} transactions for category ID {} and user ID {}", transactions.size(), categoryName, user.getId());
 
         return transactions.stream()
                 .map(this::mapToDto)

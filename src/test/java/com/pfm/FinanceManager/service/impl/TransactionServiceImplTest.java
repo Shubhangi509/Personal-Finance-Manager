@@ -172,7 +172,7 @@ class TransactionServiceImplTest {
         when(transactionRepo.findByUserAndCategory(testUser, testCategory))
                 .thenReturn(Arrays.asList(testTransaction));
 
-        List<TransactionResponse> responses = transactionService.getByCategory(1L);
+        List<TransactionResponse> responses = transactionService.getByCategory("");
 
         assertNotNull(responses);
         assertEquals(1, responses.size());

@@ -33,12 +33,12 @@ public class TransactionController {
     public Map<String, List<TransactionResponse>> getAll(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) Long categoryId) {
+            @RequestParam(required = false) String category) {
         List<TransactionResponse> transactions;
         if (startDate != null && endDate != null) {
             transactions = transactionService.getByDateRange(startDate, endDate);
-        } else if (categoryId != null) {
-            transactions = transactionService.getByCategory(categoryId);
+        } else if (category != null) {
+            transactions = transactionService.getByCategory(category);
         } else {
             transactions = transactionService.getAllSortedByDate();
         }
