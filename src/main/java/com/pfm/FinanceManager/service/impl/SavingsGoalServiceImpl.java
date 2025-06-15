@@ -116,7 +116,7 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
         User user = sessionUtil.getSessionUser();
         if (user == null) {
             log.warn("Attempt to delete goal ID {} without active session", id);
-            return "Attempt to delete goal without active session";
+            throw new RuntimeException("Attempt to delete goal without active session");
         }
 
         log.info("Deleting goal ID {} for user ID {}", id, user.getId());
@@ -124,11 +124,11 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
         SavingsGoal goal = goalRepo.findById(id).orElse(null);
         if (goal == null) {
             log.warn("Cannot delete: goal ID {} not found for user ID {}", id, user.getId());
-            return "Cannot delete goal, user not found";
+            throw new RuntimeException("Cannot delete goal, user not found");
         }
         if (!goal.getUser().getId().equals(user.getId())) {
             log.warn("Unauthorized delete attempt on goal ID {} by user ID {}", id, user.getId());
-            return "Unauthorized delete attempt on goal";
+            throw new RuntimeException("Unauthorized delete attempt on goal");
         }
 
         goalRepo.delete(goal);

@@ -25,11 +25,11 @@ public class AuthServiceImpl implements AuthService {
         log.info("Registration attempt for username: {}, phone: {}", request.getUsername(), request.getPhoneNumber());
         if (userRepository.existsByUsername(request.getUsername())) {
             log.warn("Registration failed - username '{}' already exists", request.getUsername());
-            return new ApiResponse("Username already exists", null);
+            throw new RuntimeException("Username already exists");
         }
         if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
             log.warn("Registration failed - phone number '{}' already exists", request.getPhoneNumber());
-            return new ApiResponse("Phone number already exists", null);
+            throw new RuntimeException("Phone number already exists");
         }
 
         User user = User.builder()
@@ -51,17 +51,17 @@ public class AuthServiceImpl implements AuthService {
         Object userId = session.getAttribute("user");
         if(userId != null) {
             log.warn("Logout current session to login again");
-            return new ApiResponse("Logout current session to login again", null);
+            throw new RuntimeException("Logout current session to login again");
         }
         User user = userRepository.findByUsername(request.getUsername()).orElse(null);
         if (user == null) {
             log.error("Login failed - username not found: {}", request.getUsername());
-            return new ApiResponse("Invalid credentials", null);
+            throw new RuntimeException("Invalid credentials");
         }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             log.error("Login failed - invalid password for username: {}", request.getUsername());
-            return new ApiResponse("Invalid Credentials", null);
+            throw new RuntimeException("Invalid Credentials");
         }
 
         session.setAttribute("user", user.getId()); // Save user session
@@ -78,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
             return new ApiResponse("Logout successful", null);
         }
         log.warn("Logout attempted with no active session");
-        return new ApiResponse("No active session", null);
+        throw new RuntimeException("No active session");
     }
 }
 

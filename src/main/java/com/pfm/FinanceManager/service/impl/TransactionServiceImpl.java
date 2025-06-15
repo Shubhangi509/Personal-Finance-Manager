@@ -196,7 +196,7 @@ public class TransactionServiceImpl implements TransactionService {
         // Note: Date is not allowed to be updated as per requirements
         if (request.getDate() != null) {
             log.warn("Attempted to update date for transaction ID {}, which is not allowed", id);
-            throw new RuntimeException("Transaction date cannot be modified");
+//            throw new RuntimeException("Transaction date cannot be modified");
         }
 
         Transaction updated = transactionRepo.save(transaction);
