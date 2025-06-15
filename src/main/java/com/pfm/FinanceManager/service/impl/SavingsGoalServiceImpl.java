@@ -89,7 +89,7 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
         User user = sessionUtil.getSessionUser();
         if (user == null) {
             log.warn("Attempt to update goal ID {} without active session", id);
-            return null;
+            throw new RuntimeException("No active session");
         }
 
         log.info("Updating goal ID {} for user ID {}", id, user.getId());
@@ -97,11 +97,11 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
         SavingsGoal goal = goalRepo.findById(id).orElse(null);
         if (goal == null) {
             log.warn("Cannot update: goal ID {} not found for user ID {}", id, user.getId());
-            return null;
+            throw new RuntimeException("Goal doesn't exist");
         }
         if (!goal.getUser().getId().equals(user.getId())) {
             log.warn("Unauthorized update attempt on goal ID {} by user ID {}", id, user.getId());
-            return null;
+            throw new RuntimeException("Unauthorized update");
         }
 
         goal.setTargetAmount(request.getTargetAmount());
