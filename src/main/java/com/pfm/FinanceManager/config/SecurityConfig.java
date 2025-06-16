@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Enable session
                 )
-                .httpBasic(Customizer.withDefaults()); // OR .formLogin(Customizer.withDefaults());
+                .formLogin(Customizer.withDefaults())   // Enable for browser-based login
+                .httpBasic(Customizer.withDefaults());  // Also allow Postman/basic auth
 
         return http.build();
     }
