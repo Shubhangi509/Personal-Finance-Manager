@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findByUser(User user);
     List<Category> findByUserAndType(User user, TransactionType type);
-    List<Category> findByIsDefaultTrue();
+    List<Category> findByIsCustomFalse();
     Optional<Category> findByNameAndUser(String name, User user);
     
     @Query("SELECT COUNT(t) > 0 FROM Transaction t WHERE t.category = ?1")

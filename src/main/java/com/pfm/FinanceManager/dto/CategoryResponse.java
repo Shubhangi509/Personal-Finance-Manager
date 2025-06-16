@@ -27,5 +27,5 @@ public class CategoryResponse {
 
     @Getter
     @Setter
-    private boolean isDefault;
+    private boolean isCustom;
 }

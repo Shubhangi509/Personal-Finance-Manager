@@ -20,18 +20,18 @@ public class DefaultCategoryUtil {
         Category salary = Category.builder()
                 .name("Salary")
                 .type(TransactionType.INCOME)
-                .isDefault(true)
+                .isCustom(false)
                 .user(user)
                 .build();
 
         // Default EXPENSE categories
         List<Category> defaultExpenses = List.of(
-                Category.builder().name("Food").type(TransactionType.EXPENSE).isDefault(true).user(user).build(),
-                Category.builder().name("Rent").type(TransactionType.EXPENSE).isDefault(true).user(user).build(),
-                Category.builder().name("Transportation").type(TransactionType.EXPENSE).isDefault(true).user(user).build(),
-                Category.builder().name("Entertainment").type(TransactionType.EXPENSE).isDefault(true).user(user).build(),
-                Category.builder().name("Healthcare").type(TransactionType.EXPENSE).isDefault(true).user(user).build(),
-                Category.builder().name("Utilities").type(TransactionType.EXPENSE).isDefault(true).user(user).build()
+                Category.builder().name("Food").type(TransactionType.EXPENSE).isCustom(false).user(user).build(),
+                Category.builder().name("Rent").type(TransactionType.EXPENSE).isCustom(false).user(user).build(),
+                Category.builder().name("Transportation").type(TransactionType.EXPENSE).isCustom(false).user(user).build(),
+                Category.builder().name("Entertainment").type(TransactionType.EXPENSE).isCustom(false).user(user).build(),
+                Category.builder().name("Healthcare").type(TransactionType.EXPENSE).isCustom(false).user(user).build(),
+                Category.builder().name("Utilities").type(TransactionType.EXPENSE).isCustom(false).user(user).build()
         );
 
         List<Category> allDefaults = new ArrayList<>();

@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .name(request.getName())
                 .description(request.getDescription())
                 .type(request.getType())
-                .isDefault(false)
+                .isCustom(true)
                 .user(user)
                 .build();
         Category saved = categoryRepo.save(category);
@@ -91,7 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         // Prevent modification of default categories
-        if (category.isDefault()) {
+        if (!category.isCustom()) {
             log.warn("Attempted to update default category ID {}", id);
             throw new RuntimeException("Cannot modify default categories");
         }
@@ -127,7 +127,7 @@ public class CategoryServiceImpl implements CategoryService {
                 });
 
         // Prevent deletion of default categories
-        if (category.isDefault()) {
+        if (!category.isCustom()) {
             log.warn("Attempted to delete default category '{}'", name);
             throw new RuntimeException("Cannot delete default categories");
         }
@@ -148,7 +148,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .name(category.getName())
                 .description(category.getDescription())
                 .type(category.getType())
-                .isDefault(category.isDefault())
+                .isCustom(category.isCustom())
                 .build();
     }
 }

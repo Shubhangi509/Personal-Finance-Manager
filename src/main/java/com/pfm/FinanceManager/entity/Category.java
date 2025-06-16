@@ -39,7 +39,7 @@ public class Category {
     @Getter
     @Setter
     @Column(nullable = false)
-    private boolean isDefault;
+    private boolean isCustom;
 
     @Getter
     @Setter
